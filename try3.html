@@ -244,13 +244,17 @@ document.addEventListener("keydown",(e)=>{
 
 let startX = 0;
 let startY = 0;
+
 // For Mobile Touch Controls
+
 canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault(); 
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
-});
+}, { passive: false });
 
 canvas.addEventListener("touchend", (e) => {
+  e.preventDefault(); 
   let endX = e.changedTouches[0].clientX;
   let endY = e.changedTouches[0].clientY;
 
@@ -259,18 +263,18 @@ canvas.addEventListener("touchend", (e) => {
 
   if(Math.abs(diffX) > Math.abs(diffY)){
     if(diffX > 0 && dx === 0){
-      dx = grid; dy = 0; 
+      dx = grid; dy = 0;
     } else if(diffX < 0 && dx === 0){
-      dx = -grid; dy = 0; 
+      dx = -grid; dy = 0;
     }
   } else {
     if(diffY > 0 && dy === 0){
-      dx = 0; dy = grid; 
+      dx = 0; dy = grid;
     } else if(diffY < 0 && dy === 0){
-      dx = 0; dy = -grid; 
+      dx = 0; dy = -grid;
     }
   }
-});
+}, { passive: false });
 // End Mobile Touch Controls
 function endGame(){
   gameOverFlag=true;
