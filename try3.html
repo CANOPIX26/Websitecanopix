@@ -151,7 +151,7 @@ function randomFood(){
 function gameLoop(){
   if(gameOverFlag) return;
   requestAnimationFrame(gameLoop);
-  if(++count<8) return;
+  if(++count<12) return;
   count=0;
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -244,7 +244,7 @@ document.addEventListener("keydown",(e)=>{
 
 let startX = 0;
 let startY = 0;
-
+// For Mobile Touch Controls
 canvas.addEventListener("touchstart", (e) => {
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
@@ -271,7 +271,7 @@ canvas.addEventListener("touchend", (e) => {
     }
   }
 });
-
+// End Mobile Touch Controls
 function endGame(){
   gameOverFlag=true;
   let screen=document.getElementById("gameOverScreen");
