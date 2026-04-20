@@ -9,62 +9,75 @@
     <style>
     /* --- CSS--- */
     :root {
-        --primary: rgba(147, 93, 31, 0.781);
-        --secondary: #e09524;
-        --dark-bg: #0b0c10;
-        --light-bg: #0b0c10;
-        --text-light: #c5c6c7;
-        --white: #ffffff;
-        --gold: #c5b86b;
-        --brown: #0b0c10;
-        --separator: #2b1d0e; 
+        --primary: rgba(147, 93, 31, 0.781);/* main color */
+        --secondary: #e09524;/* second color */
+        --dark-bg: #0b0c10;/* dark background color */
+        --light-bg: #0b0c10;/* light background color */
+        --text-light: #c5c6c7;/* light text color */
+        --white: #ffffff;/* white color */
+        --gold: #c5b86b;/* gold color */
+        --brown: #0b0c10;/* brown color */
+        --separator: #2b1d0e;  /* line color between things */
     }
-
-    /* ---Global --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ---Global(whole page) --- */
+    * {
+         margin: 0;/* no outside space */
+         padding: 0;/* no inside space */
+          box-sizing: border-box; }
     body { 
         font-family: 'Poppins', sans-serif; 
         background-color: var(--dark-bg); 
         color: var(--text-light); 
-        overflow-x: hidden; 
+        overflow-x: hidden;/* no scroll left/right */ 
         scroll-behavior: smooth;
     }
 
     /* --- animation --- */
+    /* Keyframes => Info of elements controls moving y3ny ebd2 mn hena ya element w move 4waya w keda  */
     @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(50px); }
-        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; 
+            transform: translateY(50px);  /* start lower */
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0);/* move to normal place */ }
     }
-    .reveal-item { opacity: 0; }
+    
+    .reveal-item { opacity: 0; }/* Hidden items at first */
+    /* When activated, the item shows with animation */
     .reveal-item.animated { animation: fadeInUp 0.8s ease forwards; }
+    /* --- profile pic in navbar style --- */
+.profile-img-nav {
+    width: 32px; /*  width of the the image is */
+    height: 32px; /* height of the image is */
+    border-radius: 50%; /* makes the image a circle */
+    object-fit: cover; /* makes the image fit nicely inside circle*/
+    border: 1.5px solid var(--gold); /* gold line around the image */
+    background: #23242a; /* dark color behind the image */
+}
+    /* This is the box of the profile picture */
+.settings-pic-wrapper {
+    display: flex; /* puts items in a column */
+    flex-direction: column; /* items go down */
+    align-items: center; /* center items */
+    margin-bottom: 15px; /* space under the photo =15 pixels */
+}
+   /* This is the big profile picture in settings */
+.settings-profile-preview {
+    width: 90px; 
+    height: 90px; 
+    border-radius: 50%; /* makes it a circle */
+    border: 3px solid var(--primary); /* colored border ,solid line y3ny el line da kamel m4 mt2ta3 */
+    object-fit: cover; /* image fits nicely */
+    margin-bottom: 8px; /* space under image */
+    cursor: pointer; /* you can click in image*/
+    transition: 0.3s; /* smooth effect for 0.3 seconds */
+    background: #23242a; /* dark background */
+}
 
-    /* --- profile pic style --- */
-    .profile-img-nav {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1.5px solid var(--gold);
-        background: #23242a;
-    }
-    .settings-pic-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-    .settings-profile-preview {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        border: 3px solid var(--primary);
-        object-fit: cover;
-        margin-bottom: 8px;
-        cursor: pointer;
-        transition: 0.3s;
-        background: #23242a;
-    }
-    .settings-profile-preview:hover { transform: scale(1.05); filter: brightness(1.2); }
+    .settings-profile-preview:hover { transform: scale(1.05);
+         filter: brightness(1.2);
+         }
     #upload-profile-pic { display: none; }
 
     /* --- page --- */
@@ -77,28 +90,55 @@
         overflow-y: auto;
         animation: slideIn 0.5s ease;
     }
+    /* Keyframes => Info of elements controls moving y3ny ebd2 mn hena ya element w move 4waya w keda  */
     @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-    .page-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; border-bottom: 2px solid var(--primary); padding-bottom: 20px; }
-    .btn-back { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+    .page-header { display: flex;
+         align-items: center; 
+        gap: 20px; margin-bottom: 40px; 
+        border-bottom: 2px solid var(--primary);
+         padding-bottom: 20px; }
+    .btn-back { background: var(--primary); 
+        color: white; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px;
+         cursor: pointer; 
+         display: flex;
+          align-items: center;
+           gap: 10px;
+           font-weight: bold; }
     .page-content { line-height: 1.8; color: var(--white); }
     .page-content h2 { text-align: left; margin-bottom: 20px; color: var(--gold); }
     .resource-box { background: var(--light-bg); padding: 20px; border-radius: 10px; margin-top: 30px; border-left: 5px solid var(--primary); }
 
-    /* ---auth &setting --- */
+    /* ---authantication & setting --- */
     #animated-login-wrapper, #settings-overlay {
-        position: fixed; inset: 0; 
-        background: rgba(0,0,0,0.85); 
-        display: none; justify-content: center; align-items: center; z-index: 10000;
-        backdrop-filter: blur(5px);
+        position: fixed; 
+        inset: 0; /* covers the whole screen */
+        background: rgba(0,0,0,0.85); /* dark background */
+        display: none;/* hidden at first */
+         justify-content: center;/* put things in the middle (left & right) */
+          align-items: center;/* put things in the middle (up & down) */
+           z-index: 10000;/* stays on top of everything */
+        backdrop-filter: blur(5px);/* makes background blurry */
     }
     .box {
-        position: relative; width: 90%; max-width: 420px; height: 380px;
-        background: #1a1a24; border-radius: 20px;
-        display: flex; justify-content: center; align-items: center;
-        transition: 0.5s ease-in-out; overflow: hidden;
-        box-shadow: 0 15px 50px #000;
+        position: relative;
+         width: 90%; /* takes most of the screen width */
+        max-width: 420px; /* but not bigger than this */
+        height: 380px; /* height of the box */
+    background: #1a1a24; /* dark color background */
+    border-radius: 20px; /* makes corners round */
+        display: flex; /* puts items inside nicely */
+    justify-content: center; /* center left & right */
+    align-items: center; /* center up & down */
+    transition: 0.5s ease-in-out; /* smooth change animation */
+    overflow: hidden; /* hides anything outside the box */
+        box-shadow: 0 15px 50px #000;/* shadow under the box */
     }
+    /* When we switch to signup or settings, the box becomes taller */
     .box.signup-mode, .box.settings-mode { height: 620px; }
+    /* These create glowing moving borders */
     .box::before, .box::after {
         content: ""; position: absolute; width: 150%; height: 300%;
         background: conic-gradient(transparent, var(--primary), transparent 60%);
@@ -106,20 +146,56 @@
     }
     .box::after { background: conic-gradient(transparent, var(--gold), transparent 60%); animation-delay: -2s; }
     @keyframes rotate-border { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .inner-content { position: absolute; inset: 4px; background: #23242a; border-radius: 16px; z-index: 10; }
-    .loginBx { position: relative; z-index: 20; width: 85%; display: flex; flex-direction: column; gap: 12px; text-align: center; }
-    .loginBx h2 { font-size: 1.5rem; letter-spacing: 2px; color: #fff; margin-bottom: 5px; }
-    .input-group { position: relative; width: 100%; }
+    .inner-content { position: absolute;
+         inset: 4px; 
+         background: #23242a; 
+        border-radius: 16px; 
+        z-index: 10; }
+    .loginBx { position: relative;
+         z-index: 20;
+          width: 85%; 
+          display: flex; 
+          flex-direction: column;
+           gap: 12px; 
+           text-align: center; }
+    .loginBx h2 { font-size: 1.5rem; 
+        letter-spacing: 2px; 
+        color: #fff; 
+        margin-bottom: 5px; }
+    .input-group { position: relative;
+         width: 100%; }
     .loginBx input, .custom-select {
-        width: 100%; padding: 12px 15px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2);
-        background: rgba(255,255,255,0.05); color: #fff; outline: none; font-size: 0.9rem;
+        width: 100%;
+         padding: 12px 15px;
+          border-radius: 25px; 
+          border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05); 
+        color: #fff; 
+        outline: none; 
+        font-size: 0.9rem;
     }
-    .custom-select option { background: #1a1a24; color: #fff; }
-    .toggle-pass { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--primary); font-size: 1.1rem; z-index: 100; }
+    .custom-select option { background: #1a1a24;
+         color: #fff; }
+    .toggle-pass { position: absolute; 
+        right: 18px; 
+        top: 50%;
+         transform: translateY(-50%); 
+         cursor: pointer; 
+         color: var(--primary);
+          font-size: 1.1rem;
+           z-index: 100; }
     .signup-only { display: none; }
     .loginBx input[type="submit"], .btn-action {
-        background: var(--primary); color: #000; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; transition: 0.3s;
-        width: 100%; padding: 12px; border-radius: 25px;
+        background: var(--primary); 
+        color: #000;
+         font-weight: bold;
+          border: none; 
+          cursor: pointer; 
+          margin-top: 10px;
+           transition: 0.3s;
+        width: 100%; 
+        padding: 12px;
+         border-radius: 25px;
     }
     .loginBx input[type="submit"]:hover, .btn-action:hover { background: var(--white); transform: scale(1.02); }
     .group-links { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; }
@@ -127,9 +203,13 @@
 
     /* ---profile style --- */
     .profile-nav {
-        position: relative; cursor: pointer;
-        display: flex; align-items: center;
-        gap: 10px; color: var(--gold); font-weight: bold;
+        position: relative;/* lets us move things inside it easily */
+         cursor: pointer;/* mouse becomes a hand when you hover */
+        display: flex;/* puts items in a row */
+         align-items: center;/* keeps items in the middle */
+        gap: 10px;/* space between items */
+         color: var(--gold);/* text color is gold */
+          font-weight: bold;/* makes text strong */
     }
     .profile-nav:hover { color: white; }
 
@@ -339,7 +419,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 
     <div id="page-fun" class="value-page">
         <div class="page-header">
@@ -447,12 +527,12 @@
                   rel="noopener noreferrer">
                   Manuscript AI Consultant
                  </a>
-                 <a href="https://zingiberaceous-unmorphologically-ofelia.ngrok-free.dev/" 
-                 class="btn">
+                 <!-- <a href="https://zingiberaceous-unmorphologically-ofelia.ngrok-free.dev/" 
+                 class="btn" target="_blank">
                  OCR
-                 </a>
-                 <a href="https://drive.google.com/drive/folders/15RP8UkTL6olc9XRxxI9y0fTva0blOolw?usp=drive_link" 
-                 class="btn">
+                 </a> -->
+                 <a href="https://drive.google.com/drive/folders/1mbAK7VxcQgQXKo75ZAY0IPY7qax9Do5p" 
+                 class="btn" target="_blank">
                  Showcase
                  </a>
                      </div>
@@ -490,7 +570,7 @@
                 </div>
                  <div class="value-card reveal-item">
                     <div><h3>core value GAME</h3><p>we made the best SNAKE GAME about our Journey!</p></div>
-                    <button onclick="window.location.href='try3.html'" class="btn btn-small">TRY IT NOW!</button>
+                    <button onclick="window.location.href='snake.html'" class="btn btn-small">TRY IT NOW!</button>
                 </div>
             </div>
         </section>
@@ -811,6 +891,7 @@ function lockSection(sectionId) {
         blur.style.pointerEvents = "none";
     }
 }
+
 </script>
 </body>
 </html>
