@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <style>
-    /* --- CSS VARIABLES --- */
+    /* --- CSS--- */
     :root {
         --primary: rgba(147, 93, 31, 0.781);
         --secondary: #e09524;
@@ -20,7 +20,7 @@
         --separator: #2b1d0e; 
     }
 
-    /* --- GLOBAL RESET --- */
+    /* ---Global --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
         font-family: 'Poppins', sans-serif; 
@@ -30,7 +30,7 @@
         scroll-behavior: smooth;
     }
 
-    /* --- ANIMATIONS --- */
+    /* --- animation --- */
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(50px); }
         to { opacity: 1; transform: translateY(0); }
@@ -38,7 +38,7 @@
     .reveal-item { opacity: 0; }
     .reveal-item.animated { animation: fadeInUp 0.8s ease forwards; }
 
-    /* --- PROFILE PICTURE STYLES --- */
+    /* --- profile pic style --- */
     .profile-img-nav {
         width: 32px;
         height: 32px;
@@ -67,7 +67,7 @@
     .settings-profile-preview:hover { transform: scale(1.05); filter: brightness(1.2); }
     #upload-profile-pic { display: none; }
 
-    /* --- DETAIL PAGES --- */
+    /* --- page --- */
     .value-page {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: var(--dark-bg); z-index: 5000;
@@ -84,7 +84,7 @@
     .page-content h2 { text-align: left; margin-bottom: 20px; color: var(--gold); }
     .resource-box { background: var(--light-bg); padding: 20px; border-radius: 10px; margin-top: 30px; border-left: 5px solid var(--primary); }
 
-    /* --- AUTH & SETTINGS OVERLAYS --- */
+    /* ---auth &setting --- */
     #animated-login-wrapper, #settings-overlay {
         position: fixed; inset: 0; 
         background: rgba(0,0,0,0.85); 
@@ -125,7 +125,7 @@
     .group-links { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; }
     .group-links a { color: var(--text-light); text-decoration: none; cursor: pointer; }
 
-    /* --- PROFILE MENU --- */
+    /* ---profile style --- */
     .profile-nav {
         position: relative; cursor: pointer;
         display: flex; align-items: center;
@@ -133,11 +133,11 @@
     }
     .profile-nav:hover { color: white; }
 
-    /* --- LOCKING LOGIC --- */
+    /* --- lolcking  --- */
     .restricted-area { 
         position: relative; 
         overflow: hidden; /* hide overflowing content */ 
-        border-radius: 10px; /* rounded corners */
+        border-radius: 10px; /* rounded  for corners */
     }
     .blur-container { filter: blur(15px);
          pointer-events: none; 
@@ -155,7 +155,7 @@
     }
     body.is-logged-in .access-overlay { opacity: 0; pointer-events: none; }
 
-    /* --- MAIN WEBSITE --- */
+    /* ---main section of website --- */
     header { 
         background: rgba(61, 43, 31, 0.95); padding: 1rem 5%; 
         position: fixed; width: 100%; top: 0; z-index: 1000; 
@@ -194,24 +194,6 @@
     .spec-list li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; list-style: none; }
     .spec-list li::before { content: '🚀'; position: absolute; left: 0; font-size: 0.8rem; }
     .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-    
-    /* Style for Crew Cards */
-    /*
-    .member-card { background: #222; padding: 2rem; border-radius: 10px; text-align: center; transition: 0.3s; border: 1px solid #333; color: white; }
-    .member-card h3 { color: var(--gold); margin-top: 5px; }
-    .member-card:hover { border-color: var(--primary); background: #2a2a2a; }
-    .member-img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%; 
-        object-fit: cover;
-        border: 3px solid var(--primary);
-        margin-bottom: 15px;
-        background-color: #333;
-    }
-    
-    .role { font-style: italic; color: var(--secondary); margin-bottom: 0.5rem; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-    */
     .team-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -254,7 +236,7 @@
 </head>
 <body>
 
-    <!-- SETTINGS OVERLAY -->
+    
     <div id="settings-overlay">
         <div class="box settings-mode">
             <div class="inner-content"></div>
@@ -279,7 +261,7 @@
         </div>
     </div>
 
-    <!-- VALUE DETAIL PAGES -->
+    <!-- core values sections -->
     <div id="page-discovery" class="value-page">
         <div class="page-header">
             <button class="btn-back" onclick="closePage('page-discovery')"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
@@ -375,7 +357,7 @@
         </div>
     </div>
 
-    <!-- AUTH OVERLAY -->
+    <!-- auth -->
     <div id="animated-login-wrapper">
         <div class="box" id="auth-box">
             <div class="inner-content"></div>
@@ -457,7 +439,7 @@
                         <div style="flex: 1;">
                             <h3>Problem & Solution</h3>
                             <p>Our team has resolved the problem of scanning manuscripts by creating an app that scans them and using an AI tool that can identify the text and convert it to digital format.</p>
-                  <!-- Button Container -->
+                  <!-- buttons of innovation(AI & OCR & Showcase) -->
                   <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; justify-content: center;">
                   <a href="https://columbus-interinhibitive-janna.ngrok-free.dev/" 
                   class="btn" 
@@ -576,76 +558,9 @@
             </div>
         </section>
 
-        <!-- <section id="team">
-            <h2>The Crew</h2>
-            <div class="team-grid">
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Yamen.png" alt="Yamen" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Team Leader</div>
-                    <h3>Yamen</h3>
-                    <p>"I ensure the robotics team and the project meet all deadlines."</p>
-                </div>
-
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Hager.png" alt="Hagar" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Project Leader</div>
-                    <h3>Hagar</h3>
-                    <p>"I make sure that the project will be perfect."</p>
-                </div>
-
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Merna.jpg" alt="Merna" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Robot Leader</div>
-                    <h3>Merna</h3>
-                    <p>"I design the most handsome robot."</p>
-                </div>
-
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Yomna.png" alt="Yomna" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Maker of Attachments</div>
-                    <h3>Yomna</h3>
-                    <p>"I make the attachments for our robot."</p>
-                </div>
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Marie.png" alt="Marie" class="member-img" style="object-fit: cover; object-position: center 30%;transform: scale(1.2); ">
-                    <div class="role">Robot Maker</div>
-                    <h3>Marie</h3>
-                    <p>"I make our robot."</p>
-                </div>
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Ali.png" alt="Ali" class="member-img" style="object-fit: cover; object-position: center 5%; transform: scale(1.2);">
-                    <div class="role">Project Maker</div>
-                    <h3>Ali</h3>
-                    <p>"I research for the best ideas."</p>
-                </div>
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Moaaz.png" alt="Moaaz" class="member-img" style="object-fit: cover; object-position: center 5%; transform: scale(1.2);">
-                    <div class="role">Robot Maker</div>
-                    <h3>Moaaz</h3>
-                    <p>"I make the design of our robot."</p>
-                </div>
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Mina.png" alt="Mina" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Robot Maker</div>
-                    <h3>Mina</h3>
-                    <p>"I make sure attachments are perfect."</p>
-                </div>
-                <div class="member-card reveal-item">
-                    <img src="assets/photos/Kiro.png" alt="Kiro" class="member-img" style="object-fit: cover; object-position: center 50%;transform: scale(1.2); ">
-                    <div class="role">Project Maker</div>
-                    <h3>Kiro</h3>
-                    <p>"I have made the best website ever."</p>
-                </div>
-                 <div class="member-card reveal-item">
-                    <div class="role">Project Maker</div>
-                    <h3>Malak</h3>
-                    <p>"I invent ideas for our project."</p>
-                </div>
-            </div>
-        </section> -->
+        <!-- Team Section -->
  <section id="team">
     <h2>The Crew</h2>
-
     <div class="team-box">
                 <img src="assets/photos/InclusionSide.png" alt="Canopix-Team" class="team-img">
         <div class="team-info">
@@ -655,10 +570,9 @@
                 We are a creative team working together to build innovative robotics solutions.
             </p>
         </div>
-
     </div>
 </section>
-
+<!-- Contact Us -->
         <footer>
             <h3>Contact Us</h3>
             <p>Email: canopix26@gmail.com</p>
@@ -674,11 +588,14 @@
     </div>
 
 <script type="module">
-    
+    // Import Firebase tools we need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    // Import tools for login and users
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    // Import tools for database (saving data)
     import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// Info of our Firebase project from firebase
     const firebaseConfig = {
     apiKey: "AIzaSyBhTJ88rN4Lj4fGogNCjUbJQke-7QiRbeo",
     authDomain: "canopix2026-83ceb.firebaseapp.com",
@@ -689,9 +606,9 @@
     measurementId: "G-66W234047H"
   };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);// Start Firebase app
+    const auth = getAuth(app);// Get the login system
+    const db = getFirestore(app);//Get the database
 
     const wrapper = document.getElementById('animated-login-wrapper');
     const settingsOverlay = document.getElementById('settings-overlay');
@@ -720,7 +637,7 @@
         }
     };
 
-    // AUTH STATE CHANGE
+    // auth state
     onAuthStateChanged(auth, async (user) => {
     if (user) {
         document.body.classList.add('is-logged-in');
@@ -740,21 +657,17 @@
         }
 
         unlockSection("library-section");
-        // لو عندك سكشنات تانية مقفولة، ممكن تنادي الدالة عليهم هنا
-        // unlockSection("project");
-        
     } else {
         document.body.classList.remove('is-logged-in');
         document.getElementById('profile-nav-item').style.display = 'none';
         settingsOverlay.style.display = 'none';
 
-        // 🔒 ارجاع سكشن المكتبة للـ locked state
+        
         lockSection("library-section");
-        // lockSection("project"); لو حابة
     }
 });
 
-    // LOGIN / REGISTER
+    //login , register logic
     authBtn.onclick = async () => {
         const email = document.getElementById('email').value;
         const pass = document.getElementById('password').value;
@@ -778,7 +691,7 @@
         } catch (err) { alert(err.message); }
     };
 
-    // SETTINGS LOGIC
+    // setting login
     document.getElementById('save-settings-btn').onclick = async () => {
         const user = auth.currentUser;
         const newName = document.getElementById('update-name').value;
@@ -810,7 +723,7 @@
         }
     };
 
-    // UI CONTROLS
+    
     window.openLogin = () => { wrapper.style.display = 'flex'; };
     window.openSettings = () => { settingsOverlay.style.display = 'flex'; };
     document.getElementById('close-auth').onclick = () => { wrapper.style.display = 'none'; };
@@ -843,7 +756,7 @@
         sendPasswordResetEmail(auth, email).then(() => alert("Reset link sent!"));
     };
 
-    // DETAIL PAGES
+    // Core values pages 
     window.openPage = (pageId) => { 
         document.getElementById(pageId).style.display = 'flex';
         document.body.style.overflow = 'hidden';
@@ -853,7 +766,7 @@
         document.body.style.overflow = 'auto';
     };
 
-    // SCROLL ANIMATIONS
+    // scroll animations
     const observerOptions = { threshold: 0.15 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -890,7 +803,7 @@ function lockSection(sectionId) {
     if (!section) return;
 
     const overlay = section.querySelector(".access-overlay");
-    if (overlay) overlay.style.display = "flex"; // أو "block" حسب CSS
+    if (overlay) overlay.style.display = "flex"; 
 
     const blur = section.querySelector(".blur-container");
     if (blur) {
