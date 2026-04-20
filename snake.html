@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manuscript Snake Hunt</title>
+
+<style>
+body{
+  margin:0; /* no space around the page */
+  background:linear-gradient(135deg,#8B4513,#D2B48C,#DEB887);
+  font-family:Arial;
+  display:flex; /* helps us center things */
+    justify-content:center; /* center left & right */
+  align-items:center; /* center up & down */
+   height:100vh; /* full screen height */
+  overflow:hidden; /* no scrolling */
+}
+/* This id for the score <div>=> "shows the score (top of the screen)"" */
+#hud{
+  position:absolute;
+  top:15px;/* distance from top */
+  left:50%;
+  transform:translateX(-50%);/* be5aly kelat score in center  */
+  font-size:22px;
+  font-weight:bold;
+  color:#FFD700;
+  text-shadow:3px 3px 6px black;/* shadow behind text */
+}
+/* This holds the game and side panels */
+#gameContainer{
+  display:flex; /* puts items side by side */
+  align-items:center; /* center them */
+  gap:25px; /* space between them */
+}
+
+/* The game screen (canvas) */
+canvas{
+  background:#F4E4BC; /* light background */
+  border:6px solid #8B7355; /* border around game */
+  border-radius:15px; /* rounded corners */
+  touch-action: none; /* better for touch devices */
+}
+/* Side panels (left & right boxes) */
+.sidePanel{
+  width:220px;
+  background:#fff8dc;
+  border:4px solid #8B4513;
+  border-radius:12px;
+  padding:10px;
+  max-height:420px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;/* items go down */
+}
+
+.leftCard, .rightCard{
+  width:100%;
+  text-align:center;/* center text */
+}
+
+.leftCard img{
+  width:80px;
+  margin-bottom:5px;
+}
+/* Text under left image */
+.leftCard p{
+  font-size:14px;
+  color:black;
+}
+
+.rightCard img{
+  width:140px;
+  border:4px solid gold;
+  border-radius:10px;
+}
+/*when Game over or start screen */
+.overlay{
+  position:fixed;/* covers whole screen */
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;/* hidden at first */
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  gap:20px;
+  z-index:10;/* on top */
+  text-align:center;
+  color:white;
+}
+
+.overlay button{
+  padding:15px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;/* clickable */
+}
+</style>
+</head>
+<body>
+
+<div id="hud">Score: 0 / 6</div>
+
+<div id="gameContainer">
+  <div id="leftInfo" class="sidePanel"></div>
+  <canvas id="game" width="500" height="400"></canvas>
+  <div id="rightInfo" class="sidePanel"></div>
+</div>
+
+<div id="gameOverScreen" class="overlay">
+  <h1 id="endTitle"></h1>
+  <button onclick="restartGame()">Play Again</button>
+  <button onclick="goHome()">Back to Website</button>
+</div>
+
+<script>
+  /* Get the game screen */
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+const grid = 20; // size of each step
+
+/* Snake starts here */
+let snake = [{x:200, y:200, img:"assets/photos/archeologist.png"}];
+/* Movement direction */
+let dx = grid;/* move right */
+let dy = 0;
+/* Game values */
+let score = 0;
+let count = 0;
+let gameOverFlag = false;
+const GOAL = 6;/* number to win */
+
+const foods = [ //array of images and texts for each core value in game 
+  {img:'assets/photos/Discovery.png', sideImg:'assets/photos/DiscoverySide.jpg', text:"We discovered many new things while working on our project. It wasn’t just about completing tasks, but also about learning new skills and gaining new knowledge.We learned how to work with different technologies, improve our ideas, and solve problems step by step. Every challenge we faced helped us understand something new and do better.As we worked together, each of us discovered new skills and information that helped us grow and improve throughout the project."},
+  {img:'assets/photos/Innovation.png', sideImg:'assets/photos/InnovationSide.jpg', text:"We created a smart system to help preserve ancient manuscripts. Some manuscripts are very fragile or damaged, so it is risky to handle them directly. Our solution allows us to display them in a digital showcase, so people can explore them safely without touching them.We also used an AI model to analyze images of the manuscripts and detect any defects or damage. In addition, we applied OCR technology to extract the text and make it easier to read and study.We combined all these ideas into one system and kept improving it until it became accurate and effective."},
+  {img:'assets/photos/Impact.png', sideImg:'assets/photos/ImpactSide.png', text:"We wanted our project to make a real impact. Our goal was to create something useful and effective that can truly help others.We focused on building a solution that can support researchers and historians in their work. By improving our idea step by step, we made sure it can be practical and helpful in real situations.In the end, we aimed to create a system that helps people study and preserve history safely and efficiently."},
+  {img:'assets/photos/Inclusion.png', sideImg:'assets/photos/InclusionSide.png', text:"  In our team, everyone feels valued and included. We make sure to listen to each other’s ideas and give everyone a chance to speak. If someone finds something difficult, we help and explain it until they understand.We respect our differences and support each other, so no one feels left out."},
+  {img:'assets/photos/TeamWork.png', sideImg:'assets/photos/TeamSide.jpg', text:"We support each other and work together to overcome challenges. When the robot hub didn’t work at first, we kept improving it until it became better. Also, during the showcase, the circuits failed, but we tried several times together until we fixed them.We share ideas and responsibilities, which helped us succeed as a team. ."},
+  {img:'assets/photos/Fun.png', sideImg:'assets/photos/FunSide.png', text:"We had fun while working on our project. It wasn’t only about tasks and deadlines, but also about creating a positive and enjoyable environment.We always made time to laugh, relax, and enjoy the process together. This helped us stay creative, motivated, and open to new ideas.By keeping a balance between work and fun, we created a friendly atmosphere that made our journey more enjoyable and helped us do our best."}
+];
+
+/* First food and poison */
+let currentFood = randomFood();
+let poison = randomFood();
+
+/* Put food in random place */
+function randomFood(){
+  return {x: Math.floor(Math.random()*25)*grid,
+     y: Math.floor(Math.random()*20)*grid};
+     //math.random() gives a number between 0 and 1, multiplying it by 25 or 20 gives a number between 0 and 25 or 0 and 20, and then flooring it gives an integer between 0 and 24 or 0 and 19, which we then multiply by grid to get the actual position on the canvas.
+     //0.23 * 25 = 5.75 
+}
+
+/* Main game loop */
+function gameLoop(){
+  if(gameOverFlag) return;
+  requestAnimationFrame(gameLoop);
+  if(++count<12) return;//for speed if we want to make it slower, we can increase it.  
+  count=0;
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);  /* Clear screen */
+
+  /* Move snake */
+  let headImg = snake[0].img; 
+  let head = {x:snake[0].x+dx,
+     y:snake[0].y+dy,
+      img: headImg};
+  snake.unshift(head);
+
+    /* If snake hits wall → game over */
+  if(head.x<0||head.x>=canvas.width||head.y<0||head.y>=canvas.height){
+    endGame();
+    return;
+  }
+
+    /* If snake eats food */
+  if(head.x===currentFood.x && head.y===currentFood.y){
+    score++;/* increase score */
+    updateScore();
+    let idx = score-1;
+
+   
+    snake[0].img = foods[idx].img;/* change snake image */
+
+        /* make snake longer */
+    if(snake.length < score + 1){
+      snake.push({x: snake[snake.length-1].x, y: snake[snake.length-1].y, img: foods[idx].img});
+    }
+
+    showInfo(idx);    /* show info on screen */
+    currentFood=randomFood();    /* new food  */
+    poison=randomFood();    /* new poison */
+  } else if(head.x===poison.x && head.y===poison.y){
+    alert("Poison!");
+  } else {
+    snake.pop();/* move forward */
+  }
+
+    /* Draw snake */
+  snake.forEach((part)=>{
+    let img = new Image();
+    img.src = part.img;
+    ctx.drawImage(img, part.x, part.y, grid, grid);
+  });
+
+    /* Draw food */
+  ctx.fillStyle="gold";
+  ctx.fillRect(currentFood.x,currentFood.y,grid-2,grid-2);
+
+  
+  ctx.fillStyle="purple";
+  ctx.fillRect(poison.x,poison.y,grid-2,grid-2);
+}
+
+requestAnimationFrame(gameLoop);
+
+/* Update score text */
+function updateScore(){
+  document.getElementById("hud").innerText="Score: "+score+" / 6";
+}
+
+/* Show info on side */
+function showInfo(idx){
+  const item = foods[idx];
+  const left = document.getElementById("leftInfo");
+  const right = document.getElementById("rightInfo");
+
+  left.innerHTML = `
+    <div class="leftCard">
+      <img src="${item.img}">
+      <p>${item.text}</p>
+    </div>
+  `;
+  
+  right.innerHTML = `
+    <div class="rightCard">
+      <img src="${item.sideImg}">
+    </div>
+  `;
+
+  if(score === GOAL){  /* If player wins */
+    setTimeout(winGame, 2500); 
+  }
+}
+/* Control with keyboard like the keyboardin laptop */
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="ArrowUp" && dy===0){dx=0;dy=-grid}
+  if(e.key==="ArrowDown" && dy===0){dx=0;dy=grid}
+  if(e.key==="ArrowLeft" && dx===0){dx=-grid;dy=0}
+  if(e.key==="ArrowRight" && dx===0){dx=grid;dy=0}
+});
+
+/* Touch control (for mobile) */
+let startX = 0;
+let startY = 0;
+
+// for mobile touch controls
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault(); 
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+}, { passive: false });
+
+canvas.addEventListener("touchend", (e) => {
+  e.preventDefault(); 
+  let endX = e.changedTouches[0].clientX;
+  let endY = e.changedTouches[0].clientY;
+
+  let diffX = endX - startX;
+  let diffY = endY - startY;
+
+  if(Math.abs(diffX) > Math.abs(diffY)){
+    if(diffX > 0 && dx === 0){
+      dx = grid; dy = 0;
+    } else if(diffX < 0 && dx === 0){
+      dx = -grid; dy = 0;
+    }
+  } else {
+    if(diffY > 0 && dy === 0){
+      dx = 0; dy = grid;
+    } else if(diffY < 0 && dy === 0){
+      dx = 0; dy = -grid;
+    }
+  }
+}, { passive: false });
+// end of touch controls
+function endGame(){
+  gameOverFlag=true;
+  let screen=document.getElementById("gameOverScreen");
+  let title=document.getElementById("endTitle");
+  title.innerText="GAME OVER";
+  screen.style.display="flex";
+}
+
+/* Win game */
+function winGame(){
+  gameOverFlag=true;
+  let screen=document.getElementById("gameOverScreen");
+  let title=document.getElementById("endTitle");
+  title.innerText="You collected all FLL values!";
+  screen.style.display="flex";
+}
+
+/* Restart game */
+function restartGame(){ location.reload(); }
+function goHome(){ window.location.href="index.html"; }
+
+</script>
+</body>
+</html>
